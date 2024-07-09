@@ -8,7 +8,8 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 const Schema = mongoose.Schema;
 // Basic Configuration
 const port = process.env.PORT || 3000;
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use('/public', express.static(`${process.cwd()}/public`));
@@ -30,6 +31,7 @@ app.get('/', function(req, res) {
 
 app.post('/api/shorturl', (req, res) => {
   const { url } = req.body;
+  console.log(url);
   // Validate URL format
   try {
     const urlObj = new URL(url);
